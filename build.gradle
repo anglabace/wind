@@ -1,0 +1,49 @@
+allprojects {
+    group = 'com.wind'
+    version = '0.0.1'
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+            mavenCentral()
+            maven { url "http://repo.spring.io/milestone" }
+            maven { url 'http://repo.spring.io/libs-release' }
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+        dependencies {
+            classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
+            classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE"
+            classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2"
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = '1.8'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url 'http://repo.spring.io/libs-release' }
+    }
+
+    dependencies {
+        implementation 'org.apache.commons:commons-lang3:3.8.1'
+        implementation 'com.google.guava:guava:27.1-jre'
+        implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}

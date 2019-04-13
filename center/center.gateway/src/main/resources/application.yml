@@ -1,0 +1,51 @@
+server:
+  port: 8443
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_ZONE_HOST:localhost}:${EUREKA_ZONE_PORT:8761}/eureka/
+
+spring:
+  application:
+    name: geteway
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+  security:
+    oauth2:
+      jwt:
+        signingKey: 123456
+
+  cloud:
+    gateway:
+      default-filters:
+      - name: Retry
+        args:
+          retries: 3
+          statuses: BAD_GATEWAY
+      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+      - name: RequestRateLimiter
+        args:
+          redis-rate-limiter.replenishRate: 1  #令牌桶的容积
+          redis-rate-limiter.burstCapacity: 1  #流速 每秒
+          rate-limiter: "#{@defaultRedisRateLimiter}"  #SPEL表达式取得对应的bean
+          key-resolver: "#{@remoteAddressKeyResolver}" #SPEL表达式取得对应的bean
+
+gate:
+  ignore:
+    authentication:
+      startWith: /oauth,/open
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    com.springboot.cloud.gateway: debug
+  path: logs/
+  file:
+    max-size: 1GB

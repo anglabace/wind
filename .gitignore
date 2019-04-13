@@ -1,0 +1,21 @@
+### output ###
+.vscode/
+build/
+bin/
+out/
+
+### idea ###
+.class
+.project
+.idea/
+*.iml
+
+### vscode ###
+.gradle/
+.settings/
+.classpath
+
+### log ###
+*.log
+*.gz
+logs/

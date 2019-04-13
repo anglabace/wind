@@ -1,0 +1,8 @@
+rootProject.name = 'platform'
+include 'demo.producer', 'demo.consumer', 'center.authorization', 'center.core', 'center.eureka', 'center.gateway'
+project(':center.authorization').projectDir = new File("center\\center.authorization")
+project(':center.core').projectDir = new File("center\\center.core")
+project(':center.eureka').projectDir = new File("center\\center.eureka")
+project(':center.gateway').projectDir = new File("center\\center.gateway")
+project(':demo.producer').projectDir = new File("demo\\demo.producer")
+project(':demo.consumer').projectDir = new File("demo\\demo.consumer")
