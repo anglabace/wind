@@ -1,6 +1,6 @@
 package com.wind.demo.producer.task;
 
-import com.wind.demo.producer.events.BusSender;
+import com.wind.demo.producer.events.RabbitSender;
 import com.wind.demo.producer.events.RedisSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,23 +12,20 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableScheduling
 public class ScheduledTasks {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private RedisSender redisSender;
 
     @Autowired
-    private BusSender busSender;
+    private RabbitSender rabbitSender;
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 13000)
     public void sendMessageToRedis() {
-        logger.info("Send Hello To Redis With chat");
-        redisSender.send("chat", "Hello from Redis!");
+        redisSender.send("chat", "Hello To Redis!");
     }
 
-    @Scheduled(fixedRate = 30000)
-    public void sendMessageToMq() {
-        logger.info("Send Hello To RabbitMQ With mq");
-        busSender.send("mq", "Hello To RabbitMQ!");
+    @Scheduled(fixedRate = 17000)
+    public void sendMessageToBus() {
+        rabbitSender.send("rabbit", "Hello To RabbitMQ!");
     }
 }

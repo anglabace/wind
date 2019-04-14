@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class BusSender {
+public class RabbitSender {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     public void send(String routingKey, String message) {
-        log.info("routingKey:{}=>message:{}", routingKey, message);
+        log.info("Rabbit Send: {} => {}", routingKey, message);
         rabbitTemplate.convertAndSend(routingKey, message);
     }
 }

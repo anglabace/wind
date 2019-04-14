@@ -1,7 +1,6 @@
 package com.wind.demo.producer.events;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -12,8 +11,8 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class RedisSender {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -23,12 +22,11 @@ public class RedisSender {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.addMessageListener(listenerAdapter, new ChannelTopic("chat"));
-        logger.info("init container:{}", listenerAdapter);
         return container;
     }
 
     public void send(String channel, String message) {
-        logger.info("{}=>{}", channel, message);
+        log.info("Redis Send: {} => {}", channel, message);
         stringRedisTemplate.convertAndSend(channel, message);
     }
 }

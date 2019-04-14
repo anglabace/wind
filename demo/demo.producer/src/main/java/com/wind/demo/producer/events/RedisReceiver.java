@@ -1,22 +1,20 @@
 package com.wind.demo.producer.events;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class RedisReceiver {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void handleMessage(String message) {
-        logger.info("Received <{}>", message);
+        log.info("Redis Receive <{}>", message);
     }
 
     @Bean
     MessageListenerAdapter redisListenerAdapter() {
-        logger.info("new listener");
         return new MessageListenerAdapter(this);
     }
 }
