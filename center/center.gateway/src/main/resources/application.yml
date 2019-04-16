@@ -27,10 +27,10 @@ spring:
       - AddResponseHeader=X-Response-Default-Foo, Default-Bar
       - name: RequestRateLimiter
         args:
-          redis-rate-limiter.replenishRate: 1  #令牌桶的容积
-          redis-rate-limiter.burstCapacity: 1  #流速 每秒
-          rate-limiter: "#{@defaultRedisRateLimiter}"  #SPEL表达式取得对应的bean
-          key-resolver: "#{@remoteAddressKeyResolver}" #SPEL表达式取得对应的bean
+          redis-rate-limiter.replenishRate: 10
+          redis-rate-limiter.burstCapacity: 20
+          rate-limiter: "#{@defaultRedisRateLimiter}"
+          key-resolver: "#{@remoteAddressKeyResolver}"
 
 gate:
   ignore:
