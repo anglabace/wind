@@ -16,7 +16,9 @@ spring:
     oauth2:
       jwt:
         signingKey: 123456
-
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/platform
   cloud:
     gateway:
       default-filters:

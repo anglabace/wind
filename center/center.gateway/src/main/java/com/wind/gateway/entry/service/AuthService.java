@@ -1,16 +1,22 @@
 package com.wind.gateway.entry.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wind.auth.core.Result;
+import com.wind.gateway.entry.dao.AuthDao;
+import com.wind.gateway.entry.entity.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.InvalidSignatureException;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.stereotype.Service;
 
+import java.security.AuthProvider;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -19,7 +25,7 @@ import java.util.stream.Stream;
 public class AuthService {
 
     @Autowired
-    private AuthProvider authProvider;
+    private AuthDao authDao;
 
     /**
      * Authorization认证开头是"bearer "
@@ -43,36 +49,35 @@ public class AuthService {
      */
     private MacSigner verifier;
 
-    public Result authenticate(String authentication, String url, String method) {
-        return authProvider.auth(authentication, url, method);
-    }
-
-    public boolean ignoreAuthentication(String url) {
+    public boolean ignoreAuthentication(String url){
         return Stream.of(this.ignoreUrls.split(",")).anyMatch(ignoreUrl -> url.startsWith(StringUtils.trim(ignoreUrl)));
     }
 
-    public boolean hasPermission(Result authResult) {
-        return authResult.isSuccess() && (boolean) authResult.getData();
-    }
-
     public boolean hasPermission(String authentication, String url, String method) {
-        if (checkJwtAccessToken(authentication)) {
-            return hasPermission(authenticate(authentication, url, method));
+        Token token = getJwtAccessToken(authentication);
+        if (token != null) {
+            Criteria criteria= new Criteria();
+            long count = authDao.count(new Query(criteria.andOperator(
+                    Criteria.where("url").is(url),
+                    Criteria.where("method").is(method),
+                    Criteria.where("role").in(token.getAuthorities())
+            )));
+            return count > 0;
         }
         return Boolean.FALSE;
     }
 
-    public boolean checkJwtAccessToken(String authentication) {
-        verifier = Optional.ofNullable(verifier).orElse(new MacSigner(signingKey));
-        boolean pass = Boolean.FALSE;
+    public Token getJwtAccessToken(String authentication) {
         try {
+            verifier = Optional.ofNullable(verifier).orElse(new MacSigner(signingKey));
             Jwt jwt = getJwt(authentication);
             jwt.verifySignature(verifier);
-            pass = Boolean.TRUE;
-        } catch (InvalidSignatureException | IllegalArgumentException ex) {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(jwt.getClaims(), Token.class);
+        } catch (Exception e) {
             log.warn("user token has expired or signature error ");
         }
-        return pass;
+        return null;
     }
 
     public Jwt getJwt(String authentication) {

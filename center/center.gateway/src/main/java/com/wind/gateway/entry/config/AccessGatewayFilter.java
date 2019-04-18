@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -19,7 +21,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class AccessGatewayFilter implements GlobalFilter {
+public class AccessGatewayFilter implements GlobalFilter, WebFilter {
 
     private final static String X_CLIENT_TOKEN_USER = "x-client-token-user";
     private final static String X_CLIENT_TOKEN = "x-client-token";
@@ -58,15 +60,28 @@ public class AccessGatewayFilter implements GlobalFilter {
         return unauthorized(exchange);
     }
 
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        ServerHttpRequest request =  exchange.getRequest();
+        boolean check = authService.hasPermission(
+                request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION),
+                request.getPath().value(),
+                request.getMethodValue());
+        if (check) {
+            return chain.filter(exchange);
+        }
+        return unauthorized(exchange);
+    }
+
     /**
      * 网关拒绝，返回401
      *
      * @param
      */
-    private Mono<Void> unauthorized(ServerWebExchange serverWebExchange) {
-        serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        DataBuffer buffer = serverWebExchange.getResponse()
+    private Mono<Void> unauthorized(ServerWebExchange exchange) {
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        DataBuffer buffer = exchange.getResponse()
                 .bufferFactory().wrap(HttpStatus.UNAUTHORIZED.getReasonPhrase().getBytes());
-        return serverWebExchange.getResponse().writeWith(Flux.just(buffer));
+        return exchange.getResponse().writeWith(Flux.just(buffer));
     }
 }

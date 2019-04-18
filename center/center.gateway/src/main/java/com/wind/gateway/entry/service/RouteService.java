@@ -1,46 +1,43 @@
 package com.wind.gateway.entry.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
+import com.wind.gateway.entry.dao.WayDao;
+import com.wind.gateway.entry.entity.Way;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.FilterDefinition;
+import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
+import java.net.URI;
 import java.util.*;
 
 @Service
 @Slf4j
 public class RouteService implements RouteDefinitionRepository {
 
-    private static final String GATEWAY_ROUTES = "gateway_routes::";
-
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private WayDao wayDao;
 
     private Map<String, RouteDefinition> routeDefinitionMaps = new HashMap<>();
 
     private void loadRouteDefinition() {
-        Set<String> gatewayKeys = stringRedisTemplate.keys(GATEWAY_ROUTES + "*");
-
-        if (CollectionUtils.isEmpty(gatewayKeys)) {
-            return;
-        }
-
-        List<String> gatewayRoutes = Optional.ofNullable(stringRedisTemplate.opsForValue().multiGet(gatewayKeys)).orElse(Lists.newArrayList());
-        gatewayRoutes.forEach(value -> {
-            try {
-                RouteDefinition routeDefinition = new ObjectMapper().readValue(value, RouteDefinition.class);
-                routeDefinitionMaps.put(routeDefinition.getId(), routeDefinition);
-            } catch (IOException e) {
-                log.error(e.getMessage());
-            }
+        // wayDao.insert(new Way().builder().uri("lb://consumer").predicates(Arrays.asList("Path=/classes/**")).filters(Arrays.asList("StripPrefix=1")).build());
+        List<Way> gatewayWays = wayDao.findAll();
+        gatewayWays.forEach(value -> {
+            RouteDefinition routeDefinition = new RouteDefinition();
+            routeDefinition.setId(value.getId().toString());
+            routeDefinition.setUri(URI.create(value.getUri()));
+            value.getPredicates().forEach(item ->
+                    routeDefinition.getPredicates().add(new PredicateDefinition(item))
+            );
+            value.getFilters().forEach(item ->
+                    routeDefinition.getFilters().add(new FilterDefinition(item))
+            );
+            routeDefinitionMaps.put(routeDefinition.getId(), routeDefinition);
         });
     }
 
