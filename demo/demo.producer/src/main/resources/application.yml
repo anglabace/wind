@@ -23,8 +23,7 @@ spring:
 
 logging:
   level:
-    org.springframework.cloud.sleuth: debug
-    java.sql.PreparedStatement: debug
+    com.wind.demo.producer: debug
   path: logs/
   file:
     max-size: 1GB

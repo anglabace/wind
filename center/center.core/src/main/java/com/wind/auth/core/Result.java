@@ -2,7 +2,7 @@ package com.wind.auth.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wind.auth.core.exception.BaseException;
+import com.wind.auth.core.exception.PlatformException;
 import com.wind.auth.core.exception.ErrorType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -95,11 +95,11 @@ public class Result<T> {
     /**
      * 系统异常类没有返回数据
      *
-     * @param baseException
+     * @param platformException
      * @return Result
      */
-    public static Result fail(BaseException baseException) {
-        return fail(baseException, null);
+    public static Result fail(PlatformException platformException) {
+        return fail(platformException, null);
     }
 
     /**
@@ -108,8 +108,8 @@ public class Result<T> {
      * @param data
      * @return Result
      */
-    public static Result fail(BaseException baseException, Object data) {
-        return new Result<>(baseException.getErrorType(), data);
+    public static Result fail(PlatformException platformException, Object data) {
+        return new Result<>(platformException.getErrorType(), data);
     }
 
     /**

@@ -20,13 +20,16 @@ spring:
   security:
     oauth2:
       jwt:
-        signingKey: 123456
+        signingKey: ${JWT_KEY:123456}
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/platform
 
 logging:
   level:
     org.springframework.web: debug
     org.springframework.security: debug
-    com.springboot.auth: debug
+    com.wind.auth.authorization: debug
   path: logs/
   file:
     max-size: 1GB

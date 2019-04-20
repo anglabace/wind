@@ -1,4 +1,4 @@
-package com.wind.demo.producer.task;
+package com.wind.demo.producer.config;
 
 import com.wind.demo.producer.events.RabbitSender;
 import com.wind.demo.producer.events.RedisSender;

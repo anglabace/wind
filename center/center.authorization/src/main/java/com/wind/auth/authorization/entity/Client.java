@@ -1,4 +1,4 @@
-package com.wind.gateway.entry.entity;
+package com.wind.auth.authorization.entity;
 
 import com.wind.auth.core.base.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -10,13 +10,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Way extends BaseEntity {
-    private List<String> predicates;
-    private List<String> filters;
-    private String uri;
-    private Integer order = 0;
+@Data
+public class Client extends BaseEntity {
+    private String name;
+    private String secret;
+    private List<String> scopes;
+    private List<String> types;
+    private List<String> uris;
 }

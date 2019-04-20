@@ -35,10 +35,14 @@ subprojects {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
         maven { url "http://repo.spring.io/milestone" }
-        maven { url 'http://repo.spring.io/libs-release' }
+        maven { url "http://repo.spring.io/libs-release" }
+        maven { url "http://oss.jfrog.org/artifactory/oss-snapshot-local/" }
     }
 
     dependencies {
+        implementation 'io.springfox:springfox-swagger2:3.0.0-SNAPSHOT'
+        implementation 'io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT'
+        implementation 'io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT'
         implementation 'org.apache.commons:commons-lang3:3.8.1'
         implementation 'com.google.guava:guava:27.1-jre'
         implementation 'com.squareup.okhttp3:okhttp:3.14.1'

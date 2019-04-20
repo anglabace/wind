@@ -25,18 +25,21 @@ public class RouteService implements RouteDefinitionRepository {
     private Map<String, RouteDefinition> routeDefinitionMaps = new HashMap<>();
 
     private void loadRouteDefinition() {
-        // wayDao.insert(new Way().builder().uri("lb://consumer").predicates(Arrays.asList("Path=/classes/**")).filters(Arrays.asList("StripPrefix=1")).build());
         List<Way> gatewayWays = wayDao.findAll();
         gatewayWays.forEach(value -> {
             RouteDefinition routeDefinition = new RouteDefinition();
             routeDefinition.setId(value.getId().toString());
             routeDefinition.setUri(URI.create(value.getUri()));
-            value.getPredicates().forEach(item ->
-                    routeDefinition.getPredicates().add(new PredicateDefinition(item))
-            );
-            value.getFilters().forEach(item ->
-                    routeDefinition.getFilters().add(new FilterDefinition(item))
-            );
+            if (value.getPredicates() != null) {
+                value.getPredicates().forEach(item ->
+                        routeDefinition.getPredicates().add(new PredicateDefinition(item))
+                );
+            }
+            if (value.getFilters() != null) {
+                value.getFilters().forEach(item ->
+                        routeDefinition.getFilters().add(new FilterDefinition(item))
+                );
+            }
             routeDefinitionMaps.put(routeDefinition.getId(), routeDefinition);
         });
     }

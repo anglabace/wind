@@ -1,4 +1,4 @@
-package com.wind.gateway.entry.dao;
+package com.wind.auth.core.base;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
@@ -33,6 +33,10 @@ public class BaseDao<T> {
 
     public List<T> find(Query query) {
         return mongoTemplate.find(query, getTClass());
+    }
+
+    public T findOne(Query query) {
+        return mongoTemplate.findOne(query, getTClass());
     }
 
     public DeleteResult remove(Query query) {

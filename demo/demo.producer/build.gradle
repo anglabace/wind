@@ -10,10 +10,8 @@ dependencyManagement{
 dependencies {
     compile project(':center.core')
     implementation 'org.apache.commons:commons-pool2:2.5.0'
-    implementation 'io.springfox:springfox-swagger2:2.8.0'
-    implementation 'io.springfox:springfox-swagger-ui:2.8.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'

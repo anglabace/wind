@@ -15,7 +15,7 @@ spring:
   security:
     oauth2:
       jwt:
-        signingKey: 123456
+        signingKey: ${JWT_KEY:123456}
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/platform
@@ -26,7 +26,6 @@ spring:
         args:
           retries: 3
           statuses: BAD_GATEWAY
-      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
       - name: RequestRateLimiter
         args:
           redis-rate-limiter.replenishRate: 10
@@ -37,7 +36,7 @@ spring:
 gate:
   ignore:
     authentication:
-      startWith: /oauth,/open
+      startWith: /oauth,/login,/logout,/swagger,/webjars/springfox,/v2/api-docs
 
 management:
   endpoints:
@@ -47,7 +46,7 @@ management:
 
 logging:
   level:
-    com.springboot.cloud.gateway: debug
+    com.wind.gateway.entry: debug
   path: logs/
   file:
     max-size: 1GB

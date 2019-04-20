@@ -1,4 +1,4 @@
-package com.wind.gateway.entry.entity;
+package com.wind.auth.core.base;
 
 import lombok.Data;
 

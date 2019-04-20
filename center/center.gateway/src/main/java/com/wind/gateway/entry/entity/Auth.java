@@ -1,5 +1,6 @@
 package com.wind.gateway.entry.entity;
 
+import com.wind.auth.core.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

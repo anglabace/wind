@@ -14,7 +14,6 @@ spring:
     port: ${RABBIT_MQ_PORT:5672}
     username: ${RABBIT_MQ_USERNAME:guest}
     password: ${RABBIT_MQ_PASSWORD:guest}
-
   mvc:
     throw-exception-if-no-handler-found: true
   servlet:
@@ -26,7 +25,7 @@ spring:
 
 logging:
   level:
-    org.springframework.cloud.sleuth: debug
+    com.wind.demo.consumer: debug
   path: logs/
   file:
     max-size: 1GB

@@ -1,9 +1,8 @@
 package com.wind.gateway.entry.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wind.auth.core.Result;
 import com.wind.gateway.entry.dao.AuthDao;
-import com.wind.gateway.entry.entity.Token;
+import com.wind.auth.core.base.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
-import org.springframework.security.jwt.crypto.sign.InvalidSignatureException;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.stereotype.Service;
 
-import java.security.AuthProvider;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -59,7 +56,7 @@ public class AuthService {
             Criteria criteria= new Criteria();
             long count = authDao.count(new Query(criteria.andOperator(
                     Criteria.where("url").is(url),
-                    Criteria.where("method").is(method),
+                    Criteria.where("method").is(method.toLowerCase()),
                     Criteria.where("role").in(token.getAuthorities())
             )));
             return count > 0;

@@ -1,13 +1,13 @@
-package com.wind.gateway.entry.dao;
+package com.wind.auth.authorization.dao;
 
 import com.wind.auth.core.base.BaseDao;
-import com.wind.gateway.entry.entity.Way;
+import com.wind.auth.core.base.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@Document(collection="way")
-public class WayDao extends BaseDao<Way> {
+@Document(collection="user")
+public class UserDao extends BaseDao<User> {
 }

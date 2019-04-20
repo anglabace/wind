@@ -12,7 +12,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         HashMap<String, Object> maps = new HashMap<>();
-        maps.put("organization", authentication.getName());
+        // maps.put("organization", authentication.getName());
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(maps);
         return accessToken;
     }
