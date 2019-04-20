@@ -1,6 +1,5 @@
 package com.wind.auth.authorization.service;
 
-import com.sun.corba.se.spi.ior.ObjectId;
 import com.wind.auth.authorization.authentication.IntegrationAuthenticationContext;
 import com.wind.auth.authorization.authentication.IntegrationAuthenticationEntity;
 import com.wind.auth.authorization.authentication.IntegrationAuthenticator;
@@ -11,7 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import com.wind.auth.core.base.User;
+import com.wind.auth.core.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

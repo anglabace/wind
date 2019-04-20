@@ -1,6 +1,6 @@
 package com.wind.gateway.entry.dao;
 
-import com.wind.auth.core.base.BaseDao;
+import com.wind.auth.core.dao.BaseDao;
 import com.wind.gateway.entry.entity.Way;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.mapping.Document;

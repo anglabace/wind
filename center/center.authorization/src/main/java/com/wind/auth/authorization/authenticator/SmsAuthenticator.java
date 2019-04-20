@@ -2,9 +2,8 @@ package com.wind.auth.authorization.authenticator;
 
 import com.wind.auth.authorization.authentication.AbstractIntegrationAuthenticator;
 import com.wind.auth.authorization.authentication.IntegrationAuthenticationEntity;
-import com.wind.auth.core.base.User;
+import com.wind.auth.core.entity.User;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package com.wind.gateway.entry.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wind.gateway.entry.dao.AuthDao;
-import com.wind.auth.core.base.Token;
+import com.wind.auth.core.entity.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,11 @@ public class AuthService {
 
     @Autowired
     private AuthDao authDao;
+
+    /**
+     * root
+     */
+    private static final String ROOT = "root";
 
     /**
      * Authorization认证开头是"bearer "
@@ -53,6 +58,8 @@ public class AuthService {
     public boolean hasPermission(String authentication, String url, String method) {
         Token token = getJwtAccessToken(authentication);
         if (token != null) {
+            if(token.getAuthorities().contains(ROOT))
+                return true;
             Criteria criteria= new Criteria();
             long count = authDao.count(new Query(criteria.andOperator(
                     Criteria.where("url").is(url),
@@ -61,7 +68,7 @@ public class AuthService {
             )));
             return count > 0;
         }
-        return Boolean.FALSE;
+        return false;
     }
 
     public Token getJwtAccessToken(String authentication) {

@@ -1,4 +1,4 @@
-package com.wind.auth.core.base;
+package com.wind.auth.core.entity;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;

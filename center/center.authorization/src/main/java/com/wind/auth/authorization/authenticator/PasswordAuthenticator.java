@@ -1,10 +1,9 @@
 package com.wind.auth.authorization.authenticator;
 
-import com.netflix.discovery.converters.Auto;
 import com.wind.auth.authorization.authentication.AbstractIntegrationAuthenticator;
 import com.wind.auth.authorization.authentication.IntegrationAuthenticationEntity;
 import com.wind.auth.authorization.dao.UserDao;
-import com.wind.auth.core.base.User;
+import com.wind.auth.core.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;

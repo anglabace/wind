@@ -1,7 +1,7 @@
 package com.wind.auth.authorization.config;
 
 import com.wind.auth.authorization.dao.ClientDao;
-import com.wind.auth.authorization.entity.Client;
+import com.wind.auth.core.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

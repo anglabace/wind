@@ -1,6 +1,6 @@
 package com.wind.auth.authorization.authentication;
 
-import com.wind.auth.core.base.User;
+import com.wind.auth.core.entity.User;
 
 public interface IntegrationAuthenticator {
 

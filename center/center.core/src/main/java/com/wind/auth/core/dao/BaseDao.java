@@ -1,9 +1,10 @@
-package com.wind.auth.core.base;
+package com.wind.auth.core.dao;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
@@ -25,6 +26,10 @@ public class BaseDao<T> {
 
     public T save(T entity) {
         return mongoTemplate.save(entity);
+    }
+
+    public DeleteResult remove(String id) {
+        return mongoTemplate.remove(new Query(Criteria.where("id").is(id)), getTClass());
     }
 
     public List<T> findAll() {
