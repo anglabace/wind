@@ -36,7 +36,9 @@ spring:
 gate:
   ignore:
     authentication:
-      startWith: /oauth,/login,/logout,/swagger,/webjars/springfox,/v2/api-docs
+      startWith: /oauth,/login,/logout
+  whitelist:
+    ip: 0:0:0:0:0:0:0:1
 
 management:
   endpoints:

@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class User extends BaseEntity {
     private String username;
     private String password;

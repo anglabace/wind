@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5cbabccd47a9971908e00e30"},"name":"android","secret":"$2a$10$y0fYK8gDeSKly.zsLxbHReWQFbk65IIFQUVdkgvODz0jsyRoUpXJm","scopes":["read"],"types":["password","authorization_code","refresh_token"],"uris":["http://www.baidu.com"]}

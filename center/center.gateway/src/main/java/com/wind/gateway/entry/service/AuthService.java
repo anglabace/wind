@@ -25,11 +25,6 @@ public class AuthService {
     private AuthDao authDao;
 
     /**
-     * root
-     */
-    private static final String ROOT = "root";
-
-    /**
      * Authorization认证开头是"bearer "
      */
     private static final int BEARER_BEGIN_INDEX = 7;
@@ -58,8 +53,6 @@ public class AuthService {
     public boolean hasPermission(String authentication, String url, String method) {
         Token token = getJwtAccessToken(authentication);
         if (token != null) {
-            if(token.getAuthorities().contains(ROOT))
-                return true;
             Criteria criteria= new Criteria();
             long count = authDao.count(new Query(criteria.andOperator(
                     Criteria.where("url").is(url),

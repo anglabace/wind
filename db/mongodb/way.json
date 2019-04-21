@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5cb94ed844a8361be8e97405"},"predicates":["Path=/test/**"],"uri":"lb://consumer","createTime":{"$date":{"$numberLong":"1555648276718"}},"_class":"com.wind.gateway.entry.entity.Way"}
+{"_id":{"$oid":"5cb9c07dab7f201908f94a1d"},"predicates":["Path=/oauth/**"],"uri":"lb://authorization","createTime":{"$date":{"$numberLong":"1555648336718"}},"_class":"com.wind.gateway.entry.entity.Way"}
+{"_id":{"$oid":"5cb9c93bab7f201908f94a1e"},"predicates":["Path=/login**"],"uri":"lb://authorization","createTime":{"$date":{"$numberLong":"1555648396718"}},"_class":"com.wind.gateway.entry.entity.Way"}
+{"_id":{"$oid":"5cb9cb5dab7f201908f94a1f"},"predicates":["Path=/logout**"],"uri":"lb://authorization","createTime":{"$date":{"$numberLong":"1555648456718"}},"_class":"com.wind.gateway.entry.entity.Way"}
